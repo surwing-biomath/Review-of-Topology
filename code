@@ -1,0 +1,666 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+
+\title{Review of Topology}
+\author{Shuo Wang}
+\date{Feb. 2023}
+
+
+\usepackage{alltt}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsopn}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{enumitem}
+\usepackage{fancyhdr}
+\usepackage{graphicx}
+\usepackage{mathdots}
+\usepackage{mathtools}
+\usepackage{microtype}
+\usepackage{multirow}
+\usepackage{pdflscape}
+\usepackage{pgfplots}
+\usepackage{siunitx}
+\usepackage{slashed}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{tkz-euclide}
+\usepackage[normalem]{ulem}
+\usepackage[all]{xy}
+\usepackage{imakeidx}
+\usepackage[backend=bibtex]{biblatex}
+
+\makeindex[intoc, title=Index]
+\indexsetup{othercode={\lhead{\emph{Index}}}}
+
+
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem*{axiom}{Axiom}
+\newtheorem*{claim}{Claim}
+\newtheorem*{cor}{Corollary}
+\newtheorem*{conjecture}{Conjecture}
+\newtheorem*{defi}{Definition}
+\newtheorem*{eg}{Example}
+\newtheorem*{ex}{Exercise}
+\newtheorem*{fact}{Fact}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{notation}{Notation}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{question}{Question}
+\newtheorem*{thm}{Theorem}
+\newtheorem*{assumption}{Assumption}
+\newtheorem*{ppt}{Property}
+\newtheorem{so}{Solution}
+
+\newtheorem*{rmk}{Remark}
+\newtheorem*{exercise}{Exercise}
+
+\newtheorem{nthm}{Theorem}[section]
+\newtheorem{nlemma}[nthm]{Lemma}
+\newtheorem{nprop}[nthm]{Proposition}
+\newtheorem{ncor}[nthm]{Corollary}
+
+
+\renewcommand{\labelitemi}{--}
+\renewcommand{\labelitemii}{$\circ$}
+\renewcommand{\labelenumi}{(\roman{*})}
+
+\let\stdsection\section
+\renewcommand\section{\newpage\stdsection}
+
+\newcommand\qedsym{\hfill\ensuremath{\square}}
+% Strike through
+\def\st{\bgroup \ULdepth=-.55ex \ULset}
+
+
+\begin{document}
+
+\maketitle
+\tableofcontents
+\section{Introduction}
+\pagenumbering{roman}
+
+This note is to give a basic introduction to topology, including point set topology (which will contains many basic topologies and their properties), and algebraic topology. We assume readers have 
+familiarity of topology. 
+
+\newpage
+\part{Point Set Topology}
+\section{Topological Space}
+Topological spaces is a set endowed with a special structure, called the \textbf{topological structure}. Let $X$ be a set. A \textbf{topology on $X$} or the topological structure on $X$ is a collection
+$\mathcal{T}$ of subsets of $X$, called \textbf{open sets}, satisfying 
+\begin{enumerate}
+\itemsep=0pt \parskip=0pt
+\item $\varnothing ,X \in \mathcal{T}$. \\ 
+\item $\bigcup\limits_{\alpha \in A} U_{\alpha } \in \mathcal{T}$ for $U_{\alpha }\in \mathcal{T}$. \\ 
+\item $\bigcap\limits_{i=1}^{n} U_{i}\in \mathcal{T}$ for $U_{i} \in \mathcal{T}$.   
+\end{enumerate}     
+We will write $(X,\mathcal{T})$ to mean a topological space, with $X$ to be the base set and $\mathcal{T}$ is the topology on $X$. If there is no ambiguity, we will omit $\mathcal{T}$ and use $X$ to mean 
+the topological space, and say "$X$ is a topological space". 
+
+We next introduce some basic concetps in topology. Assume $X$ is a topological space and $p \in X$, $S \subseteq X$. 
+
+
+\begin{enumerate}
+\itemsep=0pt \parskip=0pt   
+\item A \textbf{neighbourhood of $p$} is a subset which contains an open subset containing $p$. Similarly, a \textbf{neighbourhood of $S$} is a subsett which contains an open subset containing $S$. 
+Be aware that some authors use an open subset containing $p$ or $S$ as a neighbourhood of $p$ or $S$. In our definition, we will use \textbf{an open neighbourhood} to say an open subset containing $p$ or $S$. \\ 
+\item $S$ is said to be closed if $X-S$ is open (where $X-S$ is the set difference). \\ 
+\item The \textbf{interior of $S$}, denoted by $\mathrm{Int}S$, is the union of all open subsets of $X$ contained in $S$. \\ 
+\item The \textbf{exterior of $S$}, denoted by $\mathrm{Ext}S$, is the union of all open subsets of $X$ contained in $X-S$. \\ 
+\item The \textbf{closure of $S$}, denoted by $\bar{S}$, is the intersection of all closed subsets of $X$ containing $S$. \\ 
+\item The \textbf{boundary of $S$}, denoted by $\partial S$, is the set of all points of $X$ that are in neither $\mathrm{Int}S$ nor $\mathrm{Ext}S$. \\ 
+\item A point $p \in S$ is said to be an \textbf{isolated point of $S$} if $p$ has an open neighbourhood $U \subseteq X$ such that $U \cap  S=\{p\}$. \\ 
+\item A point $p \in S$ (not necessarily in $S$) is said to be a \textbf{limit point of $S$} if every neighbourhood of $p$ contains at least one point of $S$ other than $p$. \\ 
+\item $S$ is said to be \textbf{dense in $X$} if $\bar{S}=X$, or equivalently if every nonempty open subset of $X$ contains at least one point of $S$. \\ 
+\item $S$ is said to be \textbf{nowhere dense in $X$} if $\bar{S}$ contains no nonempty open subset.                  
+\end{enumerate} 
+
+One of the most important concepts in topology is continuity and convergence. Now let $X, Y$ be topological spaces. 
+
+\begin{enumerate}
+    \itemsep=0pt \parskip=0pt  
+\item A map $F: X \to Y$ is said to be \textbf{continuous} if for every open subset $U \subseteq Y$, the preimage $F^{-1}(U)$ is an open subset of $X$.  \\ 
+\item A continuous bijective map $F: X \to Y$ with continuous inverse is called a \textbf{homeomorphism}. If there exists a homeomorphism from $X$ to $Y$, we say that $X$ and $Y$ are \textbf{homeomorphic}. \\ 
+\item A continuous map $F: X \to Y$ is said to be a \textbf{local homeomorphism} if every point $p \in X$ has an open neighbourhood $U \subseteq X$ such that $F(U)$ is open in $Y$ and $F$ restricts to a homeomorphism from $U$ to $F(U)$. \\  
+\item Given a sequence $(p_{i})_{i=1}^{\infty }$ of points in $X$ and a point $p \in X$, the sequence is said to \textbf{converge to $p$} if for every neighbourhood $U$ of $p$, there exists a positive integer $N$ such that $p_{i} \in U$ for all $i\geq N$. In this case, we write $p_{i}\rightarrow p$ or $\mathrm{lim}_{i \to \infty } p_{i}=p$.                    
+\end{enumerate} 
+
+\begin{rmk}
+    Let $F: X \to Y$ be a map between topological spaces. Then the continuity of $F$ is equivalent to each of the following: \\ 
+    \begin{itemize}
+     \itemsep=0pt \parskip=0pt  
+    \item[(a)] For every subset $A \subseteq X$, $F(\bar{A})\subseteq \bar{F(A)}$.  \\ 
+    \item[(b)] For every subset $B \subseteq Y$, $F^{-1}(\mathrm{Int}B )\subseteq \mathrm{Int}F^{-1}(B) $.  
+    \end{itemize}   
+\end{rmk} 
+
+\begin{rmk}
+    Let $X, Y$ and $Z$ be topological spaces. The following maps are continuous:\\ 
+    \begin{itemize}
+    \itemsep=0pt \parskip=0pt
+    \item[(a)] The \textbf{identity map} $\mathrm{Id}_{X}:X \to X$ by $x \mapsto x$ for all $x \in X$.     \\ 
+    \item[(b)] Any \textbf{constant map} $F: X \to Y$ such that $F(x)=F(y)$ for all $x,y \in X$. \\ 
+    \item[(c)] Any composition $G \circ F$ of continuous maps $F: X \to Y$ and $G: Y \to Z$. \\        
+    \end{itemize}    
+\end{rmk} 
+
+\begin{rmk}
+    Let $X, Y$ be topological spaces. Suppose $F: X \to Y$ is continuous and $p_{i} \rightarrow p$ in $X$. Then $F(p_{i}) \rightarrow F(p)$ in $Y$.      
+\end{rmk} 
+
+\begin{eg}[Discrete Space]
+    If $X$ is an arbitrary set, the \textbf{discrete topology} on $X$ is a topology defined by claiming every point of $X$ to be open. Then every subset of $X$ is open in this topology. Any space with this topology is called a \textbf{discrete space}.    
+\end{eg} 
+
+\begin{eg}[Metric Space]
+    A \textbf{metric space} is a set $X$ endowed with a \textbf{metric} $d: X\times X \to \mathbb{R} $ satisfying the following properties:\\ 
+\begin{enumerate}
+    \itemsep=0pt \parskip=0pt  
+    \item Positivity: $d(x,y)\geq 0$, with equality if and only if $x=y$.    \\ 
+    \item Symmetry: $d(x,y)=d(y,x)$. \\ 
+    \item Triangle Inequality: $d(x,z)\leq d(x,y)+d(y,z)$.    
+    \end{enumerate} 
+    If $X$ is a metric space, $x \in X$ and $r \geqslant 0 $, the \textbf{open ball of radius $r$ around $x$} is the set 
+    \begin{align*}
+    B(x,r)=\left\{ y \in X: d(x,y) \leqslant r \right\} 
+     \end{align*} and the \textbf{closed ball of radius $r$ around $x$} is 
+     \begin{align*}
+     \bar{B}(x,r)=\left\{ y \in X: d(x,y)\leq r \right\}. 
+      \end{align*}  
+\end{eg} 
+The \textbf{metric topology on $X$} is defined by declaring each open ball to be open.  
+
+A subset $S \subseteq X$ of a metric space can inherit the metric topology of $X$, and hence is a metric space. We use the following standard terminology for metric spaces: \\ 
+\begin{enumerate}
+    \itemsep=0pt \parskip=0pt  
+    \item A subset $S \subseteq X$ is \textbf{bounded} if there exists a positive number $M$ such that $d(x,y)\leq M$ for all $x,y \in X$. In this case, the \textbf{diameter of $S$} is defined as $\mathrm{diam}S=\mathrm{sup}\left\{ d(x,y): x,y \in S \right\}$. \\ 
+    \item A sequence of point $(x_{i})_{i=1}^{\infty }$ in $X$ is a \textbf{Cauchy sequence} if for every $\varepsilon \geqslant 0 $, there exists an integer $N$ such that $i,j \geq N$ implies $d(x_{i},x_{j})\leqslant \varepsilon$. \\ 
+    \item A metric space $X$ is said to be complete if every Cauchy sequence in $X$ converges to a point of $X$.    
+    \end{enumerate} 
+
+    \begin{eg}[Euclidean Space]
+        For each integer $n \geq 1$, the set $\mathbb{R} ^n$ of ordered $n$-tuples of real numbers is called \textbf{$n$-dimensional Euclidean Space}. We use $x$, $(x_{i})$, or $(x_{1},\ldots ,x_{n})$ to denote a point in $\mathbb{R} ^n$, where each $x_{i}$ is a \textbf{coordinate or component of $x$}. 
+        For each $x \in \mathbb{R} ^n$, the \textbf{Euclidean norm of $x$} is a non-negative real number defined by 
+        \begin{align*}
+        \left\lVert x \right\rVert = \sqrt{(x_{1})^2+\ldots +(x_{n})^2} 
+         \end{align*} and for $x,y \in \mathbb{R} ^n$, the \textbf{Euclidean metric} is defined by 
+         \begin{align*}
+         d(x,y)=\left\lVert x-y \right\rVert 
+          \end{align*} Under this metric, $\mathbb{R} ^n$ becomes a complete metric space. The topology induced by this metric is called the \textbf{Euclidean topology}.
+    \end{eg} 
+    \begin{eg}[Complex Eucliden Space]
+      If we work in a finite-dimensional complex vector space (a vector space over the complex number field $\mathbb{C} $), we can regard this space as a real vector space. For this purpose, we call the \textbf{$n$-dimensional complex Euclidean space} 
+      the set $\mathbb{C} ^n$ of ordered $n$-tuples of complex numbers. This space can be identified with $\mathbb{R} ^{2n}$ via the correspondence 
+      \begin{align*}
+      (x_{1}+iy_{1},\ldots ,x_{n}+iy_{n}) \leftrightarrow (x_{1},\ldots ,x_{n},y_{1},\ldots y_{n})
+       \end{align*}  Actually, this process is called the \textbf{realification} of a finite-dimensional complex vector space: Since the real line $\mathbb{R} $ can be imbedded into the complex plane $\mathbb{C} $, every complex vector space is not only a module over $\mathbb{C} $, but also a module over $\mathbb{R} $, 
+       that is, we have multiplication by real numbers in this space. Thus, we can discard the complex module structure, and consider only the real module structure. After realification, the dimension of this vector space over $\mathbb{R} $ is two times as that of this space over $\mathbb{C} $. 
+       If $\left\{e_{1},\ldots ,e_{n}  \right\} $ is a set of $\mathbb{C} $-basis, then $\left\{ e_{1},\ldots ,e_{n},ie_{1},\ldots ,ie_{n} \right\} $ is a set of $\mathbb{R} $-basis. If under $\left\{ e_{1},\ldots ,e_{n} \right\} $, an element has the coordinate expression $(z_{1},\ldots ,z_{n})=(x_{1}+iy_{1},\ldots ,x_{n}+iy_{n})$, 
+       then under $\left\{ e_{1},\ldots ,e_{n},ie_{1},\ldots ,ie_{n} \right\}$, this element has the coordinate expression $(x_{1},\ldots ,x_{n},y_{1},\ldots ,y_{n})$.        
+    \end{eg} 
+
+    \begin{eg}[Subsets of Euclidean Space]
+    Since each complex vector space $\mathbb{C} ^n$ can be regarded as $\mathbb{R} ^{2n}$, we will use the real Euclidean space in this example. Every subset of $\mathbb{R} ^n$ becomes a metric space, and thus a topological space, when equipped with the Euclidean space. 
+    Whenever we mention such a subset, it is always assumed to have this metric topology unless otherwise specified. It is a complete metric space if and only if it is a closed subset of $\mathbb{R} ^n$. Here are some standard subsets of Euclidean spaces that we work with frequently: 
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item The \textbf{unit interval} is the subset $I$ of $\mathbb{R} $ defined by 
+        \begin{align*}
+        I = [0,1] = \left\{ x \in \mathbb{R} : 0 \leq x \leq 1 \right\} 
+         \end{align*}    \\ 
+        \item The \textbf{(open) unit ball of dimension $n$} is the subset $\mathbb{B}^n$ of $\mathbb{R} ^n$ defined by 
+        \begin{align*}
+        \mathbb{B}^n=\left\{ x \in \mathbb{R} ^n: \left\lVert x \right\rVert < 1  \right\} 
+         \end{align*}   \\ 
+        \item The \textbf{closed unit ball of dimension $n$} is the subset $\bar{\mathbb{B}}^n$ of $\mathbb{R} ^n$ defined by 
+        \begin{align*}
+        \bar{\mathbb{B}}^n=\left\{ x \in \mathbb{R} ^n: \left\lVert x \right\rVert \leq 1  \right\} 
+         \end{align*}   \\
+        When $n=2$, we also use terms like \textbf{(open) unit disk} and \textbf{closed unit disk} for $\mathbb{B}^2$ and $\bar{\mathbb{B}}^2$. \\ 
+        For $n \geq 0$, the \textbf{(unit) $n$-sphere} is the subset $\mathbb{S}^n$ in $\mathbb{R} ^{n+1}$ defined by 
+        \begin{align*}
+        \mathbb{S}^n=\left\{ x \in \mathbb{R} ^{n+1}: \left\lVert x \right\rVert =1  \right\} 
+         \end{align*}   Sometimes it is useful to think of an odd-dimensional sphere $\mathbb{S}^{2n+1}$ as a subset of $\mathbb{C}^{n+1}$, by means of the usual identification of $\mathbb{C} ^{n+1}$ with $\mathbb{R} ^{2n+2}$. The \textbf{(unit) circle} is the $1$-sphere $\mathbb{S}^1$, considered 
+         either as a subset of $\mathbb{R} ^2$ or as a subset of $C$.              
+        \end{enumerate}       
+    \end{eg} 
+
+\section{Hausdorff Space}
+Topological spaces allow us to describe a wide variety of concepts of "spaces". But for the purposes of manifold theory, arbitrary topological spaces are far too general, because they can have some unpleasant properties, as the next example illustrates. 
+\begin{eg}
+    Let $X$ be any set. $\mathcal{T}=\left\{ \varnothing,X \right\} $ is called the \textbf{trivial topology}. When $X$ is equipped with this topology, every sequence in $X$ converges to every point of $X$, and every map from a topological 
+    space into $X$ is continuous.    
+\end{eg} 
+
+To avoid pathological cases like this, which result when $X$ does not have sufficiently many open subsets, we often restrict our attention to topological spaces satisfying the following special condition. A topological space $X$ is said 
+to be a \textbf{Hausdorff space} if for every pair of distinct points $p,q \in X$, there exist disjoint open subsets $U,V \subseteq X$ such that $p \in U$ and $q \in V$.
+
+\begin{rmk}
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Every metric space is Hausdorff space in the metric topology. \\ 
+        \item Let $X$ be a Hausdorff space, then each singleton is closed, and each converging sequence has a unique limit point.   
+        \end{enumerate} 
+\end{rmk} 
+
+\section{Base and Countability}
+If $\mathcal{T}_{1}, \mathcal{T}_{2}$ are two topologies on $X$ such that $\mathcal{T}_{1} \subseteq \mathcal{T}_{2}$, we say that $\mathcal{T}_{1}$ is \textbf{weaker}, or \textbf{coarser} than $\mathcal{T}_{2}$, and $\mathcal{T}_{2}$ is \textbf{stronger}, or \textbf{finer} than $\mathcal{T}_{1}$. 
+Clearly the trivial topology is the weakest topology on $X$, while the discrete topology is the strongest. Clearly, the intersection of any family of topologies on $X$ is still a topology, then for any $\mathcal{E} \subseteq \mathcal{P}(X)$, there is a unique weakest topology $\mathcal{T}(\mathcal{E})$ on $X$ that contains $\mathcal{E}$, 
+namely the intersection of all topologies on $X$ containing $\mathcal{E}$:
+\begin{align*}
+\mathcal{T}(\mathcal{E})=\bigcap\limits_{\mathcal{T} \mbox{ is a topology on }X \atop \mathcal{E}\subseteq \mathcal{T}} \mathcal{T}
+ \end{align*} 
+It is called the topology \textbf{generated by $\mathcal{E}$}, and $\mathcal{E}$ is sometimes called a \textbf{subbasis} for $\mathcal{T}(\mathcal{E})$. 
+It can be checked that each element in $\mathcal{T}(\mathcal{E})$ is either $\varnothing$, $X$, or can be written as an arbitrary union of finite intersections of elements in $\mathcal{E}$.  
+
+A collection $\mathcal{B}$ of open subsets of $X$ is said to be a \textbf{basis for the topology of $X$} if every open subset of $X$ is the union of some elements of $\mathcal{B}$. 
+More generally, suppose $X$ is merely a set, and $\mathcal{B}$ is a collection of subsets of $X$ satisfying the following conditions:
+\begin{enumerate}
+    \itemsep=0pt \parskip=0pt  
+    \item $X=\bigcup\limits_{B \in \mathcal{B}} B$.  \\ 
+    \item If $B_{1}, B_{2} \in \mathcal{B}$ and $x \in B_{1}\cap B_{2}$, then there exists $B_{3}\in \mathcal{B}$ such that $x \in B_{3}\subseteq B_{1}\cap B_{2}$.      
+    \end{enumerate}    
+Then the collection of all unions of elements of $\mathcal{B}$ is a topology on $X$, called the \textbf{topology generated by $\mathcal{B}$}, and $\mathcal{B}$ is a basis for this topology. 
+And a collection $\mathcal{B}\subseteq \mathcal{P}(X)$ of subsets of $X$ is a basis for this topology if and only if elements in $\mathcal{B}$ satisfies the above two conditions.    
+
+If $X$ is a topological space and $p \in X$, a \textbf{neighbourhood basis at $p$} is a collection $\mathcal{B}_{p}$ of neighbourhoods of $p$ such that every neighbourhood of $p$ contains at least one $B \in \mathcal{B}_{p}$.
+
+A topological space $X$ is said to be \textbf{first-countable} 
+if there is a countable neighbourhood basis at each point, and \textbf{second-countable} if there is a countable basis for this topology. Since a countable basis for $X$ contains a countable neighbourhood basis at each point, second-countability implies
+first-countability. 
+
+The next lemma expresses the most important properties of first-countable spaces. To say that a sequence is \textbf{eventually in a subset} means that all but finitely many terms of the sequence are in the subset. 
+\begin{lemma}[Sequence lemma]
+    Let $X$ be a first-countable space, let $A \subseteq X$ be any subset, and let $x \in X$.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item $x \in \bar{A}$ if and only if $x$ is a limit of a sequence of points in $A$.    \\ 
+        \item $x \in \mathrm{Int}A$ if and only if every sequence in $X$ converging to $x$ is eventually in $A$. \\ 
+        \item $A$ is closed in $X$ if and only if $A$ contains every limit of every convergent sequence of points in $A$. \\ 
+        \item $A$ is open in $X$ if and only if every sequence in $X$ converging to a point of $A$ is eventually in $A$.             
+        \end{enumerate}    
+\end{lemma} 
+
+\begin{rmk}
+    Every metric space is first-countable.
+\end{rmk} 
+
+\begin{rmk}
+   The set of all open balls in $\mathbb{R} ^n$ whose radii are rational and whose centers have rational coordinates is a countable basis for the Euclidean topology, and thus $\mathbb{R} ^n$ is second countable. 
+\end{rmk} 
+
+One of the most important properties of second-countable spaces is expressed in the following proposition. Let $X$ be a topological space. A \textbf{cover of $X$} is a collection $\mathcal{U}$ of subsets of $X$ whose union is $X$; 
+it is called an \textbf{open cover} if each of the sets in $\mathcal{U}$ is open. A \textbf{subcover of $\mathcal{U}$} is a subcollection of $\mathcal{U}$ that is still a cover.
+
+\begin{prop}
+    Let $X$ be a second-countable topological space. Every open cover of $X$ has a countable subcover.  
+\end{prop} 
+
+\section{Initial Topology and Final Topology}
+We will introduce a pair of dual notion: initial topology and final topology, which generalizes more types of topologies introduced later, such as, subspace topology, product topology, disjoint union topology, quotient topology. 
+
+Given a set $X$ and an indexed family $(Y_{\alpha })_{\alpha \in A}$ of topological spaces with functions \begin{align*}
+f_{\alpha }: X \to Y_{\alpha },
+ \end{align*} the \textbf{initial topology}, or \textbf{induced topology} $\mathcal{T}$ on $X$ is the weakest topology on $X$ that makes each $f_{\alpha }$ continuous. 
+ $\mathcal{T}$ is generated by $\left\{ f_{\alpha }^{-1}(U_{\alpha }): \alpha \in A, U_{\alpha } \mbox{ is an open subset in }Y_{\alpha } \right\} $. 
+
+ \begin{prop}[Characteristic Property of the Initial Topology]
+    A function $g$ from some space $Z$ to $X$ is continuous if and only if $f_{\alpha }\circ g$ is continuous for each $\alpha \in A$:
+    \begin{displaymath}
+        \xymatrix{
+        X \ar[r]^{f_{\alpha }} & Y_{\alpha } \\ 
+        Z \ar[u]^{g} \ar[ru]_{f_{\alpha }\circ g} 
+        }
+        \end{displaymath}
+        The initial topology is the unique topology on $X$ that makes the above property holds. 
+ \end{prop}
+
+ The dual notion of the initial topology is the final topology. Given a set $X$ and an indexed family $(Y_{\alpha })_{\alpha \in A}$ of topological spaces with functions \begin{align*}
+ f_{\alpha }: Y_{\alpha }\to X,
+  \end{align*} the \textbf{final topology}, or \textbf{coinduced topology} $\mathcal{T}$ on $X$ is the strongest topology on $X$ that makes each $f_{\alpha }$ continuous. The final topology on $X$ can be equivalently defined by claiming 
+  a subset $U$ of $X$ is open in $X$ if and only if $f_{\alpha }^{-1}(U)$ is open in each $f_{\alpha }$.
+  \begin{prop}[Characteristic Property of the Final Topology]
+    A function $g$ from $X$ to some space $Z$ is continuous if and only if $g\circ f_{\alpha }$ is continuous for each $\alpha \in A$:
+    \begin{displaymath}
+        \xymatrix{
+        Y_{\alpha } \ar[r]^{f_{\alpha }} \ar[dr]_{g \circ f_{\alpha }} & X \ar[d]^{g} \\ 
+         & Z
+        }
+        \end{displaymath}
+        The final topology is the unique topology on $X$ that makes the above property holds. 
+ \end{prop}
+
+
+\section{Subspace}
+Probably the simplest way to obtain new topological spaces from old ones is by taking subsets of other spaces. If $X$ is a topological space and $S \subseteq X$ is an arbitrary subset, we define the \textbf{subspace topology on $S$}
+(Some authors use \textbf{relative topology}) to be the initial topology on $S$ induced by the inclusion $\iota _{S}: S \hookrightarrow  X$. A subset $U \subseteq X$ is open in $S$ if and only if there exists an open subset $V \subseteq X$ such that $U=V \cap S$. A subset of $S$ that is open or closed in the subspace topology 
+is sometimes said to be \textbf{relatively open} or \textbf{relatively closed in $S$}, to make it clear that we do not mean open or closed as a subset of $X$. Any subset of $X$ endowed with the subspace topology is said to be a 
+\textbf{subspace of $X$}. Whenever we treat a subset of a topological space as a space in its own right, we always assume that it has the subspace topology unless otherwise specified.
+
+If $X, Y$ are topological spaces, a continuous injective map $F: X \to Y$ is called a \textbf{topological embedding} if it is a homeomorphism onto its image $F(X) \subseteq Y$ in the subspace topology.
+
+\begin{prop}[Properties of the Subspace Topology]
+    Let $X$ be a topological space and let $S$ be a subspace of $X$.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Characteristic Property: If $Y$ is a topological space, a map $g: Y \to S$ is continuous if and only if $\iota _{S}\circ g:Y \to X$ is continuous. 
+        The subspace topology is the unique topology on $S$ for which the characteristic property holds. 
+        \begin{displaymath}
+            \xymatrix{
+            S \ar[r]^{\iota_{S}} & X_{\alpha } \\ 
+            Y \ar[u]^{g} \ar[ru]_{\iota_{S}\circ g} & 
+            }
+            \end{displaymath}  \\ 
+        \item A subset $K \subseteq S$ is closed in $S$ if and only if there exists a closed subset $L \subseteq X$ such that $K=L \cap S$. \\ 
+        \item The inclusion map $\iota _{S}: S \hookrightarrow X$ is a topological embedding. \\ 
+        \item If $Y$ is a topological space and $F: X \to Y$ is continuous, then $F|_{S}: S \to Y$ is continuous. \\ 
+        \item If $\mathcal{B}$ is a basis for the topology of $X$, then $\mathcal{B}_{S}=\left\{ B \cap S: B \in \mathcal{B} \right\} $ is a basis for the subspace topology on $S$. \\ 
+        \item If $X$ is Hausdorff, then so is $S$. \\ 
+        \item If $X$ is first-countable, then so is $S$. \\ 
+        \item If $X$ is second-countable, then so is $S$.                   
+        \end{enumerate}    
+\end{prop} 
+
+If $X, Y$ are topological spaces and $F: X \to Y$ is a continuous map, then the restriction of $F$ to every subspace of $X$ is continuous. We naturally ask the converse question: If we know that the restriction of $F$ to certain 
+subspaces of $X$ is continuous, is $F$ itself continuous? The next two propositions express two somewhat different answers to this question. 
+
+\begin{lemma}[Continuity is Local Property]
+    Continuity is a local property, in the following sense: if $F: X \to Y$ is a map between topological spaces such that every point $p \in X$ has a neighbourhood $U$ on which the restriction $F|_{U}$ is continuous, then $F$ is continuous.       
+\end{lemma} 
+
+\begin{lemma}[Gluing Lemma for Continuous Maps]
+    Let $X, Y$ be topological spaces, and suppose one of the following conditions holds:
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item $B_{1},\ldots ,B_{n}$ are finitely many closed subsets of $X$ whose union is $X$.    \\ 
+        \item $\left\{ B_{\alpha } \right\}_{\alpha  \in A} $ is a collection of open subsets of $X$ whose union is $X$.     
+        \end{enumerate}
+        Suppose that for all $i$ (the first case), or $\alpha $ (the second case) we are given continuous maps $F_{i}: B_{i} \to Y$, or $F_{\alpha }: B_{\alpha }\to Y$ that agree on overlaps: $F_{i}|_{B_{i}\cap B_{j}}=F_{j}|_{B_{i}\cap B_{j}}$, or $F_{\alpha }|_{B_{\alpha }\cap B_{\beta }}=F_{\beta }|_{B_{\alpha }\cap B_{\beta }}$.
+        Then there exists a unique continuous map $F: X \to Y$ whose restriction to each $B_{i}$ is equal to $F_{i}$ , or to $B_{\alpha }$ equal to $F_{\alpha }$.       
+\end{lemma} 
+
+\begin{rmk}
+    Let $X$ be a topological space, and suppose $X$ admits a countable open cover $\left\{ U_{i} \right\} $ such that each set $U_{i}$ is second-countable in the subspace topology. Then $X$ is second-countable.    
+\end{rmk} 
+
+\section{Product Space}
+In set theory, we have the Cartesian product of a family of sets. It is natural to ask the following question: Is there a natural way to endow the product space a kind of topology such that each coordinate map is continuous? Having the concept of 
+initial topology at hand, we define the product topology as follows: If $\left\{ X_{\alpha } \right\}_{\alpha  \in A} $ is any family of topological spaces, the \textbf{product topology} on $X=\prod\limits_{\alpha \in A} X_{\alpha }$ is 
+the initial topology on $X$ induced by the coordinate maps: $\pi _{\alpha }: X \to X_{\alpha }$. When we consider a Cartesian product of topological spaces, we always endow it with the product topology unless otherwise specified. 
+The subbasis for this topology is $\left\{ \pi _{\alpha }^{-1}(U_{\alpha }): \alpha \in A , U_{\alpha } \mbox{ is an open subset in }X_{\alpha }\right\} $, 
+and a basis for the product topology is given by sets of the form $\bigcap\limits_{i=1}^{n} \pi ^{-1}_{\alpha _{i}} (U_{\alpha _{i}})$ where $n \in \mathbb{N} $ and $U_{\alpha _{i}}$ is open in $X_{\alpha _{i}}$, for $1 \leq i \leq n$. These basis elements can also be written as 
+$\prod\limits_{\alpha \in A} U_{\alpha }$ where $U_{\alpha }=X_{\alpha }$ for all but finitely many $\alpha \in A$.
+
+
+\begin{prop}[Properties of the Product Topology]
+    Suppose $(X_{\alpha })_{\alpha \in A}$ is an indexed family of topological spaces, and let $X=\prod\limits_{\alpha \in A} X_{\alpha }$ be their product space.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Characteristic Property: If $Y$ is a topological space, a map $g: Y \to X$ is continuous if and only if each of its component function $g_{\alpha }=\pi _{\alpha }\circ g:  Y\to X_{\alpha }$ is continuous. 
+        The product topology is the unique topology on $X$ for which the characteristic property holds. 
+        \begin{displaymath}
+            \xymatrix{
+            X \ar[r]^{\pi_{\alpha }} & X_{\alpha } \\ 
+            Z \ar[u]^{g} \ar[ru]_{\pi_{\alpha }\circ g} 
+            }
+            \end{displaymath}     \\ 
+        \item Each coordinate map $\pi _{\alpha }: X \to X_{\alpha }$ is continuous.\\ 
+        \item Given any continuous maps $F_{\alpha }:X_{\alpha }\to Y_{\alpha }$, the \textbf{product map} $\prod\limits_{\alpha \in A} F_{\alpha }: \prod\limits_{\alpha \in A} X_{\alpha } \to \prod\limits_{\alpha \in A} Y_{\alpha }$ is continuous, where \begin{align*}
+        (\prod\limits_{\alpha \in A} F_{\alpha })((x_\alpha )_{\alpha \in A})=(F_{\alpha }(x_{\alpha }))_{\alpha \in A}
+         \end{align*} \\ 
+        \item If $S_{\alpha }$ is a subspace of $X_{\alpha }$ for each $\alpha \in A$ , the product topology and the subspace topology on $\prod\limits_{\alpha \in A}S_{\alpha }\subseteq \prod\limits_{\alpha \in A} X_{\alpha }$ coincide. \\ 
+        \item For any $\alpha  \in A $ and any choice of points $a_{\beta }\in X_{\beta } $ for $\beta  \neq \alpha $, the map $x \mapsto (a_{\beta },\ldots ,x,\ldots ,a_{\beta ^{\prime} })$ is a topological embedding of $X_{\alpha }$ into $X$. \\ 
+        \item If $\mathcal{B}_{\alpha _{i}}$ is a basis for the topology of $X_{\alpha_{i}}$ for $i=1,\ldots ,k$, then the collection \begin{align*}
+        \mathcal{B}=\left\{ B_{\alpha_{1}}\times \ldots \times B_{\alpha_{k}}: B_{\alpha_{i}}\in \mathcal{B}_{\alpha_{i}} \right\} 
+         \end{align*} is a basis for the product topology on $X$. \\ 
+        \item Every product of Hausdorff spaces is Hausdorff. \\ 
+        \item Every product of first-countable spaces is first-countable. \\ 
+        \item Every product of second-countable spaces is second-countable.         
+        \end{enumerate}   
+\end{prop} 
+
+\section{Disjoint Union Space}
+Another simple way of building new topological spaces is by taking disjoint unions of other spaces. From a set-theoretic point of view, the disjoint union is defined as follows: If $(X_{\alpha })_{\alpha \in A}$ is an indexed family of sets,
+their \textbf{disjoint union} is the set \begin{align*}
+\coprod\limits_{\alpha \in A} X_{\alpha }=\left\{ (x,\alpha ):\alpha \in A, x \in X_{\alpha } \right\}. 
+ \end{align*}  
+For each $\alpha $, there is a canonical injective map $\iota _{\alpha }:X_{\alpha } \to \coprod\limits_{\alpha \in A} X_{\alpha }$ given by $\iota _{\alpha }(x)=(x,\alpha )$, and the images of these maps for different values of $\alpha $
+are disjoint. Typically, we implicitly identify $X_{\alpha }$ with its image in the disjoint union, thereby regarding $X_{\alpha }$ as a subset of $\coprod\limits_{\alpha \in A} X_{\alpha }$. The $\alpha $ in the notation $(x,\alpha )$
+should be thought of as a "tag" to indicate which set $x$ comes from, so that the subsets corresponding to different values of $\alpha $ are disjoint, even if some or all of the origin sets $X_{\alpha }$ were identical. 
+
+Given an indexed family of topological spaces $(X_{\alpha })_{\alpha \in A}$, we define the \textbf{disjoint union topology} on $X=\coprod\limits_{\alpha \in A} X_{\alpha }$ to be the final topology on $X$ induced by 
+the canonical map $\iota _{\alpha }: X_{\alpha }\to X$. Then a subset of $\coprod\limits_{\alpha \in A} X_{\alpha }$ is open if and only if its intersection with each $X_{\alpha }$ is open in $X_{\alpha }$.
+\begin{prop}[Properties of the Disjoint Union Topology]
+    Suppose $(X_{\alpha })_{\alpha \in A}$ is an indexed family of topological spaces, and $X=\coprod\limits_{\alpha \in A} X_{\alpha }$ is equipped with the disjoint union topology. 
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Characteristic Property: If $Y$ is a topological space, a map \begin{align*}
+        g:X \to Y 
+         \end{align*} is continuous if and only if $g \circ \iota _{\alpha }$ is continuous for each $\alpha \in A$. The disjoint union topology is the unique topology on $X$ for which the characteristic property holds. 
+         \begin{displaymath}
+        \xymatrix{
+        X_{\alpha } \ar[r]^{\iota_{\alpha }} \ar[dr]_{g \circ \iota_{\alpha }} & X \ar[d]^{g} \\ 
+         & Y
+        }
+        \end{displaymath}  \\ 
+        \item A subset of $\coprod\limits_{\alpha \in A} X_{\alpha }$ is closed if and only if its intersection with each $X_{\alpha }$ is closed. \\ 
+        \item Each canonical injection $\iota _{\alpha }:X_{\alpha }\to X$ is a topological embedding. \\ 
+        \item Each disjoint union of Hausdorff spaces is Hausdorff. \\ 
+        \item Each disjoint union of first-countable spaces is first-countable.\\ 
+        \item Each disjoint union of second-countable spaces is second-countable.    
+        \end{enumerate}   
+\end{prop}
+
+\section{Quotient Space and Quotient Topology}
+If $X$ is a topological space, $Y$ is a set, and $\pi :X \to Y$ is a surjective map, the \textbf{quotient topology on $Y$ determined by $\pi $} is defined to be the final topology on $Y$ induced by $\pi $. 
+Then a subset $U \subseteq Y$ is open if and only if $\pi ^{-1}(U)$ is open in $X$. If $X$ and $Y$ are topological spaces, a surjective map $\pi : X \to Y$ is called a \textbf{quotient map} if the topology of $Y$ coincides with the final topology induced by $\pi $.
+
+The following construction is the most common way of producing quotient maps. Suppose $\sim $ is an equivalence relation on $X$, then for each $x \in X$, the \textbf{equivalence class of $x$}, denoted by $[x]$, is the set of all $y \in X$ such that 
+$y \sim x$. The set of all equivalence classes is a \textbf{partition of $X$}: a collection of disjoint nonempty subsets whose union is $X$. It can be shown that giving a equivalence relation on $X$ is equivalent to giving a partition of $X$.
+
+Suppose $X$ is a topological space and $\sim $ is an equivalence relation on $X$. Let $X/\sim $ denote the set of equivalence classes in $X$, and let $\pi :X \to X/\sim $ be the natural projection sending each point to its equivalence class.
+Endowed with the quotient topology determined by $\pi $, the space $X/\sim $ is called the \textbf{quotient space of $X$ determined by $\sim $}. For example, suppose $X$ and $Y$ are topological spaces, $A \subseteq Y$ is a closed subset, and 
+$f: A \to X$ is a continuous map. The relation $a \sim f(a)$ for all $a \in A$ generates an equivalence relation on $X \coprod Y$, whose quotient space is denoted by $X \cup _{f}Y$ and called an \textbf{adjunction space}. It is said to be 
+deformed by \textbf{attaching $Y$ to $X$ along $f$}.
+
+If $\pi :X \to Y$ is a map, a subset $U \subseteq X$ is said to be \textbf{saturated with respect to $\pi $} if $U$ is the entire preimage of its image: $U=\pi ^{-1}(\pi (U))$. Given $y \in Y$, the \textbf{fiber of $\pi $ over $y$}
+is the set $\pi ^{-1}(y)$. Thus, a subset of $X$ is saturated if and only if it is a union of fibers.
+\begin{prop}[Properties of Quotient Maps]
+    Let $\pi :X \to Y$ be a quotient map.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Characteristic Property: If $Z$ is a topological space, a map $g:Y \to Z$ is continuous if and only if $g \circ \pi :X \to Z$ is continuous.
+         The quotient topology is the unique topology on $Y$ for which the characteristic property holds. 
+        \begin{displaymath}
+            \xymatrix{
+            X \ar[r]^{\pi} \ar[dr]_{g \circ \pi} & Y \ar[d]^{g} \\ 
+             & Z
+            }
+            \end{displaymath} \\ 
+        \item A subset $K \subseteq Y$ is closed if and only if $\pi ^{-1}(K)$ is closed in $X$. \\
+        \item If $\pi $ is injective, then it is a homeomorphism. \\ 
+        \item If $U \subseteq X$ is a saturated open or closed subset, then the restriction $\pi |_{U}:U \to \pi (U)$ is a quotient map. \\ 
+        \item Any composition of $\pi $ with another quotient map is again a quotient map.    
+        \end{enumerate} 
+\end{prop} 
+\begin{rmk}
+    Let $X, Y$ be topological spaces, and suppose that $F: X \to Y$ is a surjective continuous map. Then the following are equivalent:
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item $F$ is a quotient map. \\ 
+        \item $F$ takes saturated open subsets to open subsets. \\ 
+        \item $F$ takes saturated closed subsets to closed subsets.    
+        \end{enumerate}   
+\end{rmk} 
+
+The next two properties of quotient maps play important roles in topology, and have equally important generalizations in smooth manifold theory. 
+\begin{thm}[Passing to the Quotient]
+    Suppose $\pi :X \to Y$ is a quotient map, $B$ is a topological space, and $F:X \to B$ is a continuous map that is constant on each fiber of $\pi $. Then there exists a unique continuous map $\tilde{F}:Y \to B$ such that $F=\tilde{F}\circ \pi $.      
+\end{thm} 
+\begin{thm}[Uniqueness of Quotient Space]
+    If $\pi _{1}:X \to Y_{1}$ and $\pi _{2}:X \to Y_{2}$ are quotient maps that are constant on each other's fibers, then there exists a unique homeomorphism $\varphi :Y_{1}\to Y_{2}$ such that $\varphi \circ \pi _{1}=\pi _{2}$.    
+\end{thm} 
+
+\section{Open and Closed Maps}
+A map $F: X \to Y$ is said to be an \textbf{open map} if for every open subset $U \subseteq X$, the image set $F(U)$ is open in $Y$, and a \textbf{closed map} if for every closed subset $K \subseteq X$, the image $F(K)$ is closed in $Y$. Continuous maps may 
+be open, closed, both, or neither, as can be seen by examing simple examples involving subsets of the plane.
+
+\begin{rmk}
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Suppose $X_{1},\ldots ,X_{k}$ are topological spaces, then each projection $\pi _{i}: X=X_{1}\times \ldots \times X_{k}\to X_{i}$ is an open map. \\
+        \item Let $(X_{\alpha })_{\alpha \in A}$ be an indexed family of topological spaces, then each injection $\iota _{\alpha }: X_{\alpha } \to \coprod\limits_{\alpha \in A} X_{\alpha }$ is both open and closed.  \\
+        \item Every local homeomorphism is an open map. \\
+        \item Every bijective local homeomorphism is a homeomorphism. \\
+        \item Suppose $q: X \to Y$ is an open quotient map, then $Y$ is Hausdorff if and only if the set $\mathcal{R}=\left\{ (x_{1},x_{2}): q(x_{1})=q(x_{2}) \right\} $ is closed in $X \times X$. \\ 
+        \item Let $X, Y$ be topological spaces, and let $F: X \to Y$ be a map. Then \begin{enumerate}
+            \itemsep=0pt \parskip=0pt  
+            \item $F$ is closed if and only if for every $A \subseteq X$, $F(\bar{A})\supseteq \bar{F(A)}$.    \\ 
+            \item $F$ is open if and only if for every $B \subseteq Y$, $F^{-1}(\mathrm{Int}B )\subseteq \mathrm{Int}F^{-1}B $   
+            \end{enumerate}   
+    \end{enumerate}
+\end{rmk} 
+
+The most important classes of continuous maps in topology are the homeomorphisms, quotient maps, and topological embeddings. Obviously, it is necessary for a map to be bijective in order for it to be a homeomorphism, suejective 
+for it to be a quotient map, and injective for it to be a topological embedding. However, even when a continuous map is known to satisfy one of these necessary set-theoretic conditions, it is not always easy to tell whether it has the desired 
+topological property. One simple sufficient condition is that it be either an open or a closed map, as the next theorem shows.
+\begin{thm}
+    Suppose $X, Y$ are topological spaces, and $F: X \to Y$ is a continuous map that is either open or closed. 
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item If $F$ is surjective, then it is a quotient map.  \\ 
+        \item If $F$ is injective, then it is a topological embedding. \\ 
+        \item If $F$ is bijective, then it is a homeomorphism.    
+        \end{enumerate}    
+\end{thm} 
+
+\section{Connecctedness}
+A topological space $X$ is said to be \textbf{disconnected} if it is the union of two disjoint nonempty open subsets, and it is \textbf{connected} otherwise. Equivalently, $X$ is connected if and only if the only subsets that are 
+both open and closed are $\varepsilon$ and $X$ itself. If $X$ is any topological space, a \textbf{connected subset of $X$} is a subset that is a connected space when endowed with the subspace topology. For example, the nonempty connected 
+subsets of $\mathbb{R} $ are the singletons and the intervals. A maximal connected subset of $X$ is called a \textbf{(connected) component of $X$}.   
+
+\begin{prop}[Properties of Connected Sapce]
+    Let $X, Y$ be topological spaces.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item If $F: X \to Y$ is continuous and $X$ is connected, then $F(X)$ is connected.   \\ 
+        \item Every connected subsets of $X$ is contained in a single component of $X$. \\ 
+        \item A union of connected subspaces of $X$ with a point in common is connected. \\ 
+        \item The components of $X$ are disjoint nonempty closed subsets whose union is $X$, thus they form a partition of $X$. \\ 
+        \item If $S$ is a subset of $X$ that is both open and closed, then $S$ is a union of components of $X$. \\ 
+        \item Every finite product of connected spaces is connected. \\ 
+        \item Every quotient space of a connected space is connected.          
+        \end{enumerate}  
+\end{prop} 
+
+Closely related to connectedness is path connectedness. If $X$ is a topological space and $p, q \in X$, a \textbf{path in $X$ from $p$ to $q$} is a continuous map $f:I \to X$ such that $f(0)=p, f(1)=q$. If for every pair of points 
+$p,q \in X$ there exists a path in $X$ from $p$ to $q$, then $X$ is said to be \textbf{path-connected}. The \textbf{path components of $X$} are its maximal path-connected subsets.
+
+\begin{prop}[Properties of Path-Connected Space]
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item Properties of Connected Space holds with "connected" replaced by "path-connected", and "component" by "path-component" throughout. \\ 
+        \item Every path-connected space is connected.
+        \end{enumerate} 
+\end{prop} 
+
+For most topological spaces we treat, including all manifolds, connectedness and path-connectedness turn out to be equivalent. The link between the two concepts is provided by the following notion. A topological space is said to be \textbf{locally path-connected} 
+if it admits a basis of path-connected open subsets. 
+
+\begin{prop}
+    Let $X$ be a locally path-connected topological space. 
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item The components of $X$ are open in $X$.  \\ 
+        \item The path-components of $X$ are equal to its components. \\ 
+        \item $X$ is connected if and only if it is path-connected. \\ 
+        \item Every open subset of $X$ is locally path-connected.   
+        \end{enumerate}  
+\end{prop} 
+
+\section{Compactedness}
+A topological space $X$ is said to be \textbf{compact} if every open cover of $X$ has a finite subcover. A \textbf{compact subset} of a topological space is one that is a compact space in the subspace topology. For example, it is a consequence 
+of the Heine-Borel theorem that a subset of $\mathbb{R} ^n$ is compact if and only if it is closed and bounded.   
+
+\begin{prop}
+    Let $X, Y$ be topological spaces.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item If $F: X \to Y$ is continuous and $X$ is compact, then $F(X)$ is compact.    \\ 
+        \item If $X$ is compact and $f: X \to \mathbb{R} $ is continuous, then $f$ is bounded and attains its maximum and minimum values on $X$. \\ 
+        \item Any union of finitely many compact subspaces of $X$ is compact. \\ 
+        \item If $X$ is Hausdorff and $K, L$ are disjoint compact subsets of $X$, then there exists disjoint open subsets $U, V \subseteq X$ such that $K \subseteq U, L \subseteq V$. \\ 
+        \item Every closed subset of a compact space is compact. \\ 
+        \item Every compact subset of a Hausdorff space is closed. \\ 
+        \item Every compact subset of a metric space is bounded. \\ 
+        \item Every finite product of compact spaces is compact. \\ 
+        \item Every quotient of a compact space is compact.           
+        \end{enumerate}  
+\end{prop} 
+
+For maps between metric spaces, there are several variants of continuity that are useful, especially in the context of compact spaces. Suppose $(X_{1},d_{1})$ and $(X_{2},d_{2})$ are metric spaces, and 
+$F: X_{1} \to X_{2}$ is a map. Then $F$ is said to be \textbf{uniformly continuous} if for every $\varepsilon >0$, there exists $\delta >0$ such that for all $x,y \in X_{1}$, $d_{1}(x,y)<\delta $ implies 
+$d_{2}(F(x),F(y))< \varepsilon$. It is said to be \textbf{Lipschitz continuous} if there is a positive constant $C$ such that $d_{2}(F(x),F(y))\leqslant Cd_{1}(x,y)$ for all $x,y \in X_{1}$. Any such $C$
+is called a \textbf{Lipschitz constant for $F$}. We say that $F$ is \textbf{locally Lipschitz continuous} if every point $x \in X_{1}$ has an open neighbourhood on which $F$ is Lipschitz continuous. 
+
+\begin{rmk}
+   For maps between metric spaces, Lipschitz continuity implies uniform continuity, which implies continuity, and Lipschitz continuity implies local Lipschitz continuity, which implies continuity. We use two examples 
+   to show these implications are not reversible: let $f, g: [0,\infty )\to \mathbb{R} $ be defined by $f(x)=\sqrt{x} $ and $g(x)=x^2$. Then $f$ is uniformly continuous but not locally or globally Lipschitz continuous, 
+   and $g$ is Locally Lipschitz continuous but not uniformly continuous or globally Lipschitz continuous.     
+\end{rmk} 
+
+\begin{prop}
+    Suppose $(X_{1},d_{1})$ and $(X_{2},d_{2})$ are metric spaces and $F: X_{1} \to X_{2}$ is a map. Let $K$ be any compact subset of $X_{1}$. 
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item If $F$ is continuous, then $F|_{K}$ is uniformly continuous. \\ 
+        \item If $F$ is locally Lipschitz continuous, then $F|_{K}$ is Lipschitz continuous.    
+        \end{enumerate}      
+\end{prop} 
+
+We next give equivalent criterions for compactness in a metric space. $E \subseteq X$ is a \textbf{totally bounded} subset if, for every $\varepsilon >0$, $E$ can be covered by finitely many balls of radius $\varepsilon$. Clearly, each 
+totally bounded set is bounded, but the converse is false in general.
+\begin{thm}
+    If $E$ is a subset of a metric space $(X,d)$, the following are equivalent:
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item $E$ is complete and totally bounded.  \\ 
+        \item (The bolzano-Weierstrass Property) Every sequence in $E$ has a subsequence that converges to a point of $E$. \\ 
+        \item (The Heine-Borel Property) Each open cover of $E$ has a finite subcover.  
+        \end{enumerate}   
+\end{thm}    
+
+The next lemma expresses one of the most important properties of compact spaces.
+\begin{lemma}[Closed Map Lemma]
+    Suppose $X$ is a compact space, $Y$ is a Hausdorff space, and $F:X \to Y$ is a continuous map.
+    \begin{enumerate}
+        \itemsep=0pt \parskip=0pt  
+        \item $F$ is a closed map.  \\ 
+        \item If $F$ is injective, it is a topological embedding. \\ 
+        \item If $F$ is surjective, it is a quotient map. \\    
+        \item If $F$ is bijective, it is a homeomorphism. 
+        \end{enumerate}    
+\end{lemma} 
+
+If $X$ and $Y$ are topological spaces, a map $F:X \to Y$ is said to be \textbf{proper} if for every compact set $K \subseteq Y$, the preimage $F^{-1}(K)$ is compact. Here are some useful sufficient conditions 
+for a map to be proper.
+\begin{prop}
+   Suppose $X$ and $Y$ are topological spaces, and $F:X \to Y$ is a continuous map.
+   \begin{enumerate}
+       \itemsep=0pt \parskip=0pt  
+       \item If $X$ is compact and $Y$ is Hausdorff, then $F$ is proper.   \\ 
+       \item IF $F$ is a closed map with compact fibers, then $F$ is proper. \\ 
+       \item If $F$ is a topological embedding with closed image, then $F$ is proper.   
+       \item If $Y$ is Hausdorff and $F$ has a continuous left inverse, then $F$ is proper. \\ 
+       \item If $F$ is proper and $A \subseteq X$ is a subset that is saturated with respect to $F$, then $F|_{A}:A \to F(A)$ is proper.     
+       \end{enumerate}     
+\end{prop}      
+
+
+\end{document}
